@@ -1,7 +1,7 @@
 import { Typography } from '@mui/material';
 import List from '@mui/material/List';
 import MerchantProduct from './MerchantProduct';
-export default function MerchantList() {
+export default function MerchantList(props) {
 
     return (
         <>
@@ -9,12 +9,11 @@ export default function MerchantList() {
                 All Merchants
             </Typography>
             <List sx={{ width: '100%', bgcolor: 'background.paper' }}>
-                <MerchantProduct
-                    info={'Business -- Sample Product of Mg Merchants'}
-                />
-                <MerchantProduct
-                    info={'Shopee -- Electrical Product of Mg Merchants'}
-                />
+            {
+                props.merchants.map(merchant=>{
+                    return <MerchantProduct merchant={merchant}/>
+                })
+            }
             </List>
         </>
     );

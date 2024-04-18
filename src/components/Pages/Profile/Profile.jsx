@@ -1,15 +1,47 @@
+import { useNavigate } from "react-router-dom";
 import Configuration from "./Configuration";
 import LogInfo from "./LogInfo";
 import Service from "./Service";
 import UserInfo from "./UserInfo";
+import { useEffect, useState } from "react";
+import Loading from "../../common/Loading";
+import axios from "axios";
+import { API_HOST } from "../../../constant";
 
 function Profile() {
+    const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const token = localStorage.getItem("accessToken");
+        const url = `${API_HOST}/user/details`;
+
+        axios.get(url, {
+            mode: 'no-cors',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+            .then(response => {
+                setLoading(false);
+                console.log(response.data);
+            })
+            .catch(error => {
+                setLoading(false);
+                navigate("/signin")
+            });
+    }, []);
     return (
         <>
-            <UserInfo />
-            <LogInfo />
-            <Service/>
-            <Configuration/>
+            {
+            loading ? <Loading /> :
+                <>
+                    <UserInfo />
+                    <LogInfo />
+                    <Service />
+                    <Configuration />
+                </>
+            }
         </>
 
     );
