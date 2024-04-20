@@ -6,6 +6,7 @@ import Profile from '../Pages/Profile/Profile';
 import SignIn from '../Pages/Signin/SignIn';
 import { Box } from '@mui/material';
 import SignUp from '../Pages/Signup/SignUp';
+import LinkBank from '../Pages/LinkBank/LinkBank';
 
 
 function Main() {
@@ -18,6 +19,7 @@ function Main() {
                 <Route path='/profile' element={<Profile />} />
                 <Route path='/signin' element={<SignIn />} />
                 <Route path='/signup' element={<SignUp/>} />
+                <Route path="/link" element={<LinkBank/>} />
             </Routes>
         </Box>
     );

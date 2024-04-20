@@ -37,6 +37,7 @@ export default function SignIn() {
         })
             .then(response => {
                 localStorage.setItem('accessToken', response.data.accessToken);
+                localStorage.setItem("user_id",response.data.uid)
                 navigate("/");
             })
             .catch(error => {
