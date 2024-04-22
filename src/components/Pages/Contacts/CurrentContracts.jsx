@@ -31,7 +31,7 @@ export default function CurrentContracts() {
 
             {(
                 contracts.length === 0 ?
-                    <Paper elevation={0} sx={{ background: 'rgba(250,218,221, 0.4)', color: 'rgb(255,0,0)' }} >
+                    <Paper elevation={0} sx={{ background: 'rgba(250,218,221, 0.3)', color: 'rgb(255,0,0)' }} >
                         <Box sx={{ background: 'rgba(250,218,221, 1)', height: 10 }}>
                         </Box>
                         <Box sx={{ padding: 2, display: 'flex', justifyContent: 'center' }}>

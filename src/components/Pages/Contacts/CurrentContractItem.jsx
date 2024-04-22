@@ -15,7 +15,7 @@ export default function CurrentContractItem({ merchant, status }) {
             sx={{
                 background: 'rgba(0,255,0,0.05)',
                 borderRadius: '10px',
-                border: '1px solid rgba(0,255,0,0.2)', display: 'flex', alignItems: 'center',
+                display: 'flex', alignItems: 'center',
                 justifyContent: "space-between"
             }}
 

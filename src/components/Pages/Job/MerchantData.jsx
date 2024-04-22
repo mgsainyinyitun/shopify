@@ -1,67 +1,55 @@
-import { Typography, Paper, Box, Chip, Rating } from "@mui/material"
-import LightButton from "../../common/LightButton";
+import { Typography, Paper, Box, Avatar, LinearProgress } from "@mui/material"
+import { useEffect, useState } from "react";
+import { getImageFromDb } from "../../../utils/ImageUtils";
+import TradeData from "./TradeData";
 
-export default function MerchantData() {
+export default function MerchantData({ merchant,totalTasks,currentTask }) {
+
+    const [imageData, setImageData] = useState(null);
+    const [progress, setProgress] = useState(0);
+
+    if (merchant !== null) {
+        getImageFromDb(merchant.imageUuid, setImageData)
+    }
+
+    useEffect(()=>{
+        if(merchant){
+            console.log(currentTask);
+            console.log(totalTasks)
+            setProgress(((currentTask-1)/totalTasks) * 100);
+        }
+    })
+
 
     return (
         <>
             <Typography variant='h6' color={'gray'} mb={3}>
-                contracted merchant data
-            </Typography>
-            <Paper elevation={0} sx={{ background: 'rgba(250,218,221, 0.4)', color: 'rgb(255,0,0)' }} >
-                <Box sx={{ background: 'rgba(250,218,221, 1)', height: 10 }}>
-                </Box>
-                <Box sx={{ padding: 2, display: 'flex', justifyContent: 'center' }}>
-                    No signature information
-                </Box>
-            </Paper>
-
-            <Typography variant='h6' color={'gray'} mb={3} mt={5}>
-                Trader tasks
+                Contracted Merchant Data
             </Typography>
 
-            <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                <Box sx={{ display: 'flex', justifyContent: 'space-around', marginBottom: 8 }}>
-                    <Box sx={{ display: 'flex', flexDirection:'column',alignItems:'center'}}>
-                        <Typography variant='body1' color={'gray'}>
-                            Number of tasks
-                        </Typography>
-                        <Typography variant='body1' color={'gray'}>
-                            <Chip label="0/0" variant="outlined" />
-                        </Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', flexDirection:'column',alignItems:'center'}}>
-                        <Typography variant='body1' color={'gray'}>
-                            Commission on this occasion
-                        </Typography>
-                        <Typography variant='body1' color={'gray'}>
-                            ≈ 0Bs
-                        </Typography>
-                    </Box>
-                </Box>
-
-                <Box sx={{ display: 'flex', justifyContent: 'space-around' }}>
-                    <Box sx={{ display: 'flex', flexDirection:'column',alignItems:'center'}}>
-                        <Typography variant='body1' color={'gray'}>
-                            Orde r price
-                        </Typography>
-                        <Typography variant='body1' color={'gray'}>
-                            ≈ 0Bs
-                        </Typography>
-                    </Box>
-                    <Box sx={{ display: 'flex', flexDirection:'column',alignItems:'center'}}>
-                        <Typography variant='body1' color={'gray'}>
-                            Qualification requirements
-                        </Typography>
-                        <Typography variant='body1' color={'gray'}>
-                            <Rating value={0} />
-                        </Typography>
-                    </Box>
-                </Box>
-            </Box>
-
-            <LightButton
-                text = {'COMENZAR TRABAJO'}
+            {
+                merchant === null ?
+                    (<Paper elevation={0} sx={{ background: 'rgba(250,218,221, 0.4)', color: 'rgb(255,0,0)' }} >
+                        <Box sx={{ background: 'rgba(250,218,221, 1)', height: 10 }}>
+                        </Box>
+                        <Box sx={{ padding: 2, display: 'flex', justifyContent: 'center' }}>
+                            No signature information
+                        </Box>
+                    </Paper>) :
+                    (<Box m={1} p={1} sx={{ borderRadius: 1.5, background: 'rgba(0,255,0,0.03)' }} display={'flex'}>
+                        <Avatar sx={{ background: 'gray', width: 50, height: 50, border: '1px solid rgba(255,0,0,0.5)' }} src={imageData} />
+                        <Box ml={2} width={'100%'} sx={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-around' }}>
+                            <Typography variant="body1" color={'gray'}>
+                                <b> {merchant.name} </b> — {merchant.description}
+                            </Typography>
+                            <LinearProgress variant="determinate" color="success" value={progress} />
+                        </Box>
+                    </Box>)
+            }
+            <TradeData 
+             merchant = {merchant}
+             totalTasks = {totalTasks}
+             currentTask = {currentTask}
             />
         </>
     );
