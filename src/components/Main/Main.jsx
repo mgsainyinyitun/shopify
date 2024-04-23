@@ -8,6 +8,7 @@ import { Box } from '@mui/material';
 import SignUp from '../Pages/Signup/SignUp';
 import LinkBank from '../Pages/LinkBank/LinkBank';
 import TradingPage from '../Pages/Trade/TradingPage';
+import Withdraw from '../Pages/Withdraw/Withdraw';
 
 
 function Main() {
@@ -18,6 +19,7 @@ function Main() {
                 <Route path='/contacts' element={<Contracts />} />
                 <Route path='/job' element={<Job />} />
                 <Route path='/profile' element={<Profile />} />
+                <Route path='/profile/withdraw' element={<Withdraw/>}/>
                 <Route path='/signin' element={<SignIn />} />
                 <Route path='/signup' element={<SignUp/>} />
                 <Route path="/link" element={<LinkBank/>} />

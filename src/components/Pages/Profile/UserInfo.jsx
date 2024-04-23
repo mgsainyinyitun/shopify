@@ -4,8 +4,11 @@ import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalance
 import WalletOutlinedIcon from '@mui/icons-material/WalletOutlined';
 import SyncOutlinedIcon from '@mui/icons-material/SyncOutlined';
 import ProfileItem from "./ProfileItem";
+import { useNavigate } from "react-router-dom";
 
 export default function UserInfo(props) {
+
+    const navigate = useNavigate();
 
     const UserRating = ({ user }) => {
         return (
@@ -47,7 +50,7 @@ export default function UserInfo(props) {
 
                 <Button variant="outlined" sx={{ marginRight: "5px", color: 'green' }} fullWidth>DEPOSIT</Button>
 
-                <Button variant="outlined" fullWidth sx={{ marginRight: "5px" }}>WITHDRWL</Button>
+                <Button onClick={()=>navigate('/profile/withdraw')} variant="outlined" fullWidth sx={{ marginRight: "5px" }}>WITHDRWL</Button>
 
                 {/* <Button variant="contained" ml={5} disableElevation sx={{ minWidth:550, background: '#ede7f6', color: 'green' }}>
                     DEPOSIT
