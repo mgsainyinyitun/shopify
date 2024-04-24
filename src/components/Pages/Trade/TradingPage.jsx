@@ -89,7 +89,7 @@ export default function TradingPage() {
                                     </Box> : null
                                 }
                                 {activeStep === 3 ?
-                                    <Button fullWidth variant="outlined" onClick={() => navigate("/jobcl")} sx={{ mt: 1, mr: 1 }}>
+                                    <Button fullWidth variant="outlined" onClick={() => navigate("/job")} sx={{ mt: 1, mr: 1 }}>
                                         CONFIRM
                                     </Button> : null
                                 }
