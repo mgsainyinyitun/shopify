@@ -29,10 +29,12 @@ function Job() {
             setContractMerchant(response.data.merchant);
             if (response.data.totalTasks) setTotalTasks(response.data.totalTasks);
             if (response.data.currentTask) setCurrentTask(response.data.currentTask);
-
+            setLoading(false);
         }).catch(error => {
+            setLoading(false);
             console.log(error);
             navigate("/signin");
+
         })
     }, []);
 
