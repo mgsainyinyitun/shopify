@@ -49,13 +49,11 @@ export default function TradeData({ merchant, totalTasks, currentTask }) {
     function tradeProduct() {
         const url = `${API_HOST}/trade/start-trade`
         const token = localStorage.getItem('accessToken');
-
         const data = {
             productId: product.id,
             taskNumber: currentTask
         }
         console.log(data);
-
         axios.post(url, data, {
             mode: 'no-cors',
             headers: {

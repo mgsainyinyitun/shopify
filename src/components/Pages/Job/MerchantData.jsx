@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { getImageFromDb } from "../../../utils/ImageUtils";
 import TradeData from "./TradeData";
 
-export default function MerchantData({ merchant,totalTasks,currentTask }) {
+export default function MerchantData({ merchant,totalTasks,currentTask,finishedTasks }) {
 
     const [imageData, setImageData] = useState(null);
     const [progress, setProgress] = useState(0);
@@ -16,7 +16,7 @@ export default function MerchantData({ merchant,totalTasks,currentTask }) {
         if(merchant){
             console.log(currentTask);
             console.log(totalTasks)
-            setProgress(((currentTask-1)/totalTasks) * 100);
+            setProgress(((finishedTasks)/totalTasks) * 100);
         }
     })
 

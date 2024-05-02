@@ -62,7 +62,6 @@ export default function TradingPage() {
                         setTimeout(() => {
                             setActiveStep((prevActiveStep) => prevActiveStep + 1);
                         }, 3000)
-
                     })
                     .catch(error => {
                         console.error(error.response.data);

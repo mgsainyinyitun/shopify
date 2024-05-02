@@ -12,6 +12,7 @@ function Job() {
     const [contractMerchant, setContractMerchant] = useState(null);
     const [totalTasks, setTotalTasks] = useState(0);
     const [currentTask, setCurrentTask] = useState(0);
+    const [finishedTasks,setFinishedTasks] = useState(0);
     const navigate = useNavigate();
     const [loading, setLoading] = useState(true);
 
@@ -26,15 +27,17 @@ function Job() {
             },
         }).then(response => {
             console.log(response.data);
-            setContractMerchant(response.data.merchant);
-            if (response.data.totalTasks) setTotalTasks(response.data.totalTasks);
-            if (response.data.currentTask) setCurrentTask(response.data.currentTask);
+            if (response.data) {
+                setContractMerchant(response.data.merchant);
+                if (response.data.totalTasks) setTotalTasks(response.data.totalTasks);
+                if (response.data.currentTask) setCurrentTask(response.data.currentTask);
+                if(response.data.finishedTasks) setFinishedTasks(response.data.finishedTasks);
+            }
             setLoading(false);
         }).catch(error => {
             setLoading(false);
             console.log(error);
             navigate("/signin");
-
         })
     }, []);
 
@@ -46,6 +49,7 @@ function Job() {
                         merchant={contractMerchant}
                         totalTasks={totalTasks}
                         currentTask={currentTask}
+                        finishedTasks={finishedTasks}
                     />
                     <MerchantLog />
                 </Box>
