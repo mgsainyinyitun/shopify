@@ -14,19 +14,14 @@ export default function MerchantData({ merchant,totalTasks,currentTask,finishedT
 
     useEffect(()=>{
         if(merchant){
-            console.log(currentTask);
-            console.log(totalTasks)
             setProgress(((finishedTasks)/totalTasks) * 100);
         }
     })
-
-
     return (
         <>
             <Typography variant='h6' color={'gray'} mb={3}>
                 Contracted Merchant Data
             </Typography>
-
             {
                 merchant === null ?
                     (<Paper elevation={0} sx={{ background: 'rgba(250,218,221, 0.4)', color: 'rgb(255,0,0)' }} >
@@ -53,5 +48,4 @@ export default function MerchantData({ merchant,totalTasks,currentTask,finishedT
             />
         </>
     );
-
 }

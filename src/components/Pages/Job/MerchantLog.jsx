@@ -1,25 +1,27 @@
-import {Paper, Box, Typography,Table,TableContainer,TableHead,TableCell,TableRow,TableBody } from "@mui/material";
+import { Paper, Box, Typography, Table, TableContainer, TableHead, TableCell, TableRow, TableBody, Chip } from "@mui/material";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { API_HOST } from "../../../constant";
 
 export default function MerchantLog() {
-    function createData(
-        No,
-        merchant,
-        task_number,
-        order_price,
-        commission,
-        working_time,
-        state
-    ) {
-        return { No, merchant, task_number, order_price, commission,working_time,state };
-    }
-
-    const rows = [
-        createData(1, 159, 6.0, 24, 4.0,'5:20','A'),
-        createData(2, 237, 9.0, 37, 4.3,'17:20','B'),
-        createData(3, 262, 16.0, 24, 6.0,'5:20','A'),
-        createData(4, 305, 3.7, 67, 4.3,'6:20','A'),
-        createData(5, 356, 16.0, 49, 3.9,'8:20','A'),
-    ];
+    const [logs, setLog] = useState([]);
+    useEffect(() => {
+        const url = `${API_HOST}/trade/log`;
+        const token = localStorage.getItem('accessToken');
+        axios.get(url, {
+            mode: 'no-cors',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        }).then(response => {
+            console.log(response.data);
+            if (response.data) {
+                setLog(response.data.tradeLogs)
+            }
+        }).catch(error => {
+            console.log(error);
+        })
+    }, [])
 
     return (
         <Box mt={5}>
@@ -27,11 +29,11 @@ export default function MerchantLog() {
                 Trader Task Logs (0)
             </Typography>
 
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx={{ height: '200px' }}>
                 <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Number of order</TableCell>
+                            <TableCell>Order ID</TableCell>
                             <TableCell align="right">Merchant</TableCell>
                             <TableCell align="right">Task number</TableCell>
                             <TableCell align="right">Order price</TableCell>
@@ -41,26 +43,31 @@ export default function MerchantLog() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row) => (
+                        {logs.map((row) => (
                             <TableRow
                                 key={row.No}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell component="th" scope="row">
-                                    {row.No}
+                                    {row.orderId}
                                 </TableCell>
                                 <TableCell align="right">{row.merchant}</TableCell>
-                                <TableCell align="right">{row.task_number}</TableCell>
-                                <TableCell align="right">{row.order_price}</TableCell>
-                                <TableCell align="right">{row.commission}</TableCell>
-                                <TableCell align="right">{row.working_time}</TableCell>
-                                <TableCell align="right">{row.state}</TableCell>
+                                <TableCell align="right">{row.taskNumber}</TableCell>
+                                <TableCell align="right">{row.orderPrice} Rs</TableCell>
+                                <TableCell align="right">{row.commission} %</TableCell>
+                                <TableCell align="right">{row.time}</TableCell>
+                                <TableCell align="right">{
+                                    row.state === 'PENDING' ?
+                                        <Chip label='PENDING' size="small" /> :
+                                        row.state === 'FINISHED' ?
+                                            <Chip color="success" label='FINISHED' size="small" /> :
+                                            <Chip label='NOT START' size='small' />
+                                }</TableCell>
                             </TableRow>
                         ))}
                     </TableBody>
                 </Table>
             </TableContainer>
-
         </Box>
     );
 }

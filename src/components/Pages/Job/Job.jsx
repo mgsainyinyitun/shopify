@@ -54,7 +54,6 @@ function Job() {
                     <MerchantLog />
                 </Box>
             }
-
         </>
     );
 }

@@ -45,38 +45,46 @@ export default function TradeData({ merchant, totalTasks, currentTask }) {
         );
     }
 
+    const PriceInfoPercent = ({ price }) => {
+        return (
+            <Box display={'flex'}>
+                ≈ {price}
+                <Typography margin={'2px'} variant='body1' color={'gray'} fontSize={12}><i>%</i></Typography>
+            </Box>
+        );
+    }
+
 
     function tradeProduct() {
-        const url = `${API_HOST}/trade/start-trade`
-        const token = localStorage.getItem('accessToken');
-        const data = {
-            productId: product.id,
-            taskNumber: currentTask
-        }
-        console.log(data);
-        axios.post(url, data, {
-            mode: 'no-cors',
-            headers: {
-                'Authorization': `Bearer ${token}`
-            },
-        }).then(response => {
-            console.log(response.data);
-            setTradeHist(response.data);
+        // const url = `${API_HOST}/trade/start-trade`
+        // const token = localStorage.getItem('accessToken');
+        // const data = {
+        //     productId: product.id,
+        //     taskNumber: currentTask
+        // }
+        // console.log(data);
+        // axios.post(url, data, {
+        //     mode: 'no-cors',
+        //     headers: {
+        //         'Authorization': `Bearer ${token}`
+        //     },
+        // }).then(response => {
+        //     console.log(response.data);
+        //     setTradeHist(response.data);
             navigate("/trade", {
                 replace: false,
                 state: {
                     merchant,
-                    tradeHist:response.data,
                     product,
                     currentTask,
                     totalTasks
                 }
             });
 
-        })
-        .catch(error => {
-            console.error(error.response.data);
-        });
+        // })
+        // .catch(error => {
+        //     console.error(error.response.data);
+        // });
     }
 
 
@@ -116,7 +124,7 @@ export default function TradeData({ merchant, totalTasks, currentTask }) {
                         <Typography variant='body1' color={'gray'}>
                             <i>  Commission For the Product</i>
                         </Typography>
-                        <PriceInfo price={product ? product.commission : 0} />
+                        <PriceInfoPercent price={product ? product.commission : 0} />
                     </Box>
                 </Box>
 
@@ -132,7 +140,7 @@ export default function TradeData({ merchant, totalTasks, currentTask }) {
                             <i>Qualification requirements</i>
                         </Typography>
                         <Typography variant='body1' color={'gray'}>
-                            <Rating value={product ? product.rating : 0} />
+                            <Rating readOnly value={product ? product.rating : 0} />
                         </Typography>
                     </Box>
                 </Box>

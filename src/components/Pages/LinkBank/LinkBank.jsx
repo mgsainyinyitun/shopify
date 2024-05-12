@@ -26,9 +26,10 @@ export default function LinkBank() {
 
     const [open, setOpen] = useState(false);
     const [bankInput, setBankInput] = useState(false);
+    const [abanks, setaBanks] = useState([]);
     const [banks, setBanks] = useState([]);
-    const [showSuccessMsg,setShowSuccessMsg] = useState(false);
-    const [Msg,setMsg] = useState('');
+    const [showSuccessMsg, setShowSuccessMsg] = useState(false);
+    const [Msg, setMsg] = useState('');
 
     const [formData, setFormData] = useState({
         name: "",
@@ -86,7 +87,7 @@ export default function LinkBank() {
 
     useEffect(() => {
         const token = localStorage.getItem("accessToken");
-        const url = `${API_HOST}/bank/all`;
+        let url = `${API_HOST}/user/bank/all`;
 
         axios.get(url, {
             mode: 'no-cors',
@@ -103,6 +104,23 @@ export default function LinkBank() {
                 console.error(error);
                 console.log("there is some error;")
             });
+
+        url = `${API_HOST}/bank/all`;
+        axios.get(url, {
+            mode: 'no-cors',
+            params: {},
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        })
+            .then(response => {
+                console.log(response.data.banks);
+                setaBanks(response.data.banks);
+            })
+            .catch(error => {
+                console.error(error);
+                console.log("there is some error;")
+            });
     }, []);
 
     return (
@@ -110,7 +128,7 @@ export default function LinkBank() {
 
             <NotificationAlert
                 type={"success"}
-                show = {showSuccessMsg}
+                show={showSuccessMsg}
                 setShow={setShowSuccessMsg}
                 message={Msg}
             />
@@ -122,6 +140,25 @@ export default function LinkBank() {
             <LinkedBankList />
             <Button onClick={handleOpen} variant="outlined" fullWidth >LINK BANK</Button>
 
+            <Typography mt={5}>Linked Bank </Typography>
+
+            {
+                banks.map(b => {
+                    return (
+                        <Box m={1} p={1} sx={{ border: '1px solid teal', borderRadius: '5px' }}>
+                            <a>
+                                <Typography>{b.bank.name}</Typography>
+                                <Box>
+                                    <Typography>Account: {b.account}</Typography>
+                                    <Typography>Phone : {b.phone} </Typography>
+                                </Box>
+                            </a>
+                        </Box>)
+                })
+            }
+
+
+            {/** Modal Section */}
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -163,7 +200,7 @@ export default function LinkBank() {
 
                                 >
                                     {
-                                        banks.map(bank => {
+                                        abanks.map(bank => {
                                             return <MenuItem
                                                 value={bank.id}> {bank.name}</MenuItem>
                                         })

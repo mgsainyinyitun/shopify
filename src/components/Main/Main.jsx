@@ -19,7 +19,7 @@ function Main() {
                 <Route path='/contacts' element={<Contracts />} />
                 <Route path='/job' element={<Job />} />
                 <Route path='/profile' element={<Profile />} />
-                <Route path='/profile/withdraw' element={<Withdraw/>}/>
+                <Route path='/profile/withdraw/:uid' element={<Withdraw/>}/>
                 <Route path='/signin' element={<SignIn />} />
                 <Route path='/signup' element={<SignUp/>} />
                 <Route path="/link" element={<LinkBank/>} />

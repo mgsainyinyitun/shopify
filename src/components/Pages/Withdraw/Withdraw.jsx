@@ -1,16 +1,22 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import WithdrawModal from "./WithdrawModal";
+import { ToastContainer } from "react-toastify";
 
 export default function Withdraw() {
-    const navigate = useNavigate();
+    const { uid } = useParams(); 
+    console.log(uid);
+
     const [amount, setAmount] = useState(0);
+    const [open,setOpen] = useState(false);
     function submit(e){
         e.preventDefault();
         console.log(amount);
     }
     return (
         <Box>
+            <ToastContainer/>
             <form onSubmit={submit}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography mb={3}>Enter the withdrawal amount</Typography>
@@ -29,9 +35,10 @@ export default function Withdraw() {
                 </Box>
                 <Box mt={3} sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography mb={2}>Payment Channel</Typography>
-                    <Button type="submit" fullWidth variant="outlined">Go To Links</Button>
+                    <Button onClick={()=>setOpen(true)} fullWidth variant="outlined">Go To Links</Button>
                 </Box>
             </form>
+            <WithdrawModal open={open} handleClose={()=>setOpen(false)} amount={amount} uid={uid}/>
         </Box>
     );
 }

@@ -50,7 +50,7 @@ export default function UserInfo(props) {
 
                 <Button variant="outlined" sx={{ marginRight: "5px", color: 'green' }} fullWidth>DEPOSIT</Button>
 
-                <Button onClick={()=>navigate('/profile/withdraw')} variant="outlined" fullWidth sx={{ marginRight: "5px" }}>WITHDRWL</Button>
+                <Button onClick={()=>navigate(`/profile/withdraw/${props.user.uid}`)} variant="outlined" fullWidth sx={{ marginRight: "5px" }}>WITHDRWL</Button>
 
                 {/* <Button variant="contained" ml={5} disableElevation sx={{ minWidth:550, background: '#ede7f6', color: 'green' }}>
                     DEPOSIT

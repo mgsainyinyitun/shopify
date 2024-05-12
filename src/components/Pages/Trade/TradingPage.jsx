@@ -7,7 +7,7 @@ import { API_HOST } from "../../../constant"
 export default function TradingPage() {
     const navigate = useNavigate();
     const location = useLocation();
-    const { merchant, product, currentTask, totalTasks, tradeHist } = location.state;
+    const { merchant, product, currentTask, totalTasks } = location.state;
     const steps = [
         {
             label: 'Submit Assignment',
@@ -29,47 +29,73 @@ export default function TradingPage() {
     ];
     const [activeStep, setActiveStep] = useState(0);
 
-    // const handleNext = () => {
-    //     setActiveStep((prevActiveStep) => prevActiveStep + 1);
-    // };
-    // const handleBack = () => {
-    //     setActiveStep((prevActiveStep) => prevActiveStep - 1);
-    // };
+    const [step1Error, setStep1Error] = useState(false);
+    const [step1ErrorMsg, setStep1ErrorMsg] = useState("");
 
-    // const handleReset = () => {
-    //     setActiveStep(0);
-    // };
+    function startTrade() {
+        const url = `${API_HOST}/trade/start-trade`
+        const token = localStorage.getItem('accessToken');
+        const data = {
+            productId: product.id,
+            taskNumber: currentTask
+        }
+        console.log('start-trade', data);
+        axios.post(url, data, {
+            mode: 'no-cors',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        })
+            .then(response => {
+                console.log('start-trade', response.data);
+                setTimeout(() => {
+                    setActiveStep((prevActiveStep) => prevActiveStep + 1); // step 1
+                    finishTrade(response.data);
+                }, 3000)
+            })
+            .catch(error => {
+                console.error(error.response.data);
+                setTimeout(() => {
+                    setActiveStep((prevActiveStep) => prevActiveStep + 1); // step 1
+                    setStep1Error(true);
+                    setStep1ErrorMsg(error.response.data.message);
+                }, 3000)
+            });
+    }
 
+
+    function finishTrade(tradeHist) {
+        const url = `${API_HOST}/trade/trade-finish`;
+        const token = localStorage.getItem('accessToken');
+        axios.post(url, { tradeId: tradeHist.id }, {
+            mode: 'no-cors',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            },
+        })
+            .then(response => {
+                console.log(response.data);
+                setTimeout(() => {
+                    setActiveStep((prevActiveStep) => prevActiveStep + 1); // step 2
+
+                    setTimeout(() => {
+                        setActiveStep((prevActiveStep) => prevActiveStep + 1); // step 3
+                    }, 3000)
+                }, 3000)
+            })
+            .catch(error => {
+                console.error(error.response.data);
+                setTimeout(() => {
+                    setActiveStep((prevActiveStep) => prevActiveStep + 1); // step 2
+                }, 3000)
+            });
+    }
 
     useEffect(() => {
-        const url = `${API_HOST}/trade/trade-finish`
-        const token = localStorage.getItem('accessToken');
         setTimeout(() => {
-            setActiveStep((prevActiveStep) => prevActiveStep + 1);
-            setTimeout(() => {
-                setActiveStep((prevActiveStep) => prevActiveStep + 1);
-                const data = {
-                    tradeId: tradeHist.id
-                }
-                axios.post(url, data, {
-                    mode: 'no-cors',
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    },
-                })
-                    .then(response => {
-                        console.log(response.data);
-                        setTimeout(() => {
-                            setActiveStep((prevActiveStep) => prevActiveStep + 1);
-                        }, 3000)
-                    })
-                    .catch(error => {
-                        console.error(error.response.data);
-                    });
-            }, 3000)
+            startTrade(); // wait 3 second and start-trade
         }, 3000);
     }, []);
-
 
     return (
         <Box sx={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
@@ -82,7 +108,14 @@ export default function TradingPage() {
                             </StepLabel>
                             <StepContent>
                                 <Typography>{step.description}</Typography>
-                                {activeStep !== 3 ?
+                                {
+                                    step1Error && (
+                                        <Box>
+                                            <Typography color="error">{step1ErrorMsg}</Typography>
+                                        </Box>
+                                    )
+                                }
+                                {!step1Error && activeStep !== 3 ?
                                     <Box sx={{ mb: 2 }}>
                                         <LinearProgress color="success" />
                                     </Box> : null
@@ -107,18 +140,3 @@ export default function TradingPage() {
         </Box>
     )
 }
-
-
-// axios.post(url, data, {
-//     mode: 'no-cors',
-//     headers: {
-//         'Authorization': `Bearer ${token}`
-//     },
-// })
-//     .then(response => {
-//         console.log(response.data);
-//             setActiveStep(3);
-//     })
-//     .catch(error => {
-//         console.error(error.response.data);
-//     });
