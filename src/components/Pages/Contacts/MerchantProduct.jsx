@@ -54,7 +54,7 @@ export default function MerchantProduct(props) {
     };
 
     function showImage(merchant) {
-        getImageFromDb(merchant.imageUuid,setImageData);
+        getImageFromDb(merchant.imageUuid, setImageData);
     }
 
 
@@ -112,6 +112,7 @@ export default function MerchantProduct(props) {
 
             </ListItem>
             <LightButton
+                disabled={props.merchant.id === 3 || props.merchant.id === 4 || props.merchant.id === 6 ? true : false}
                 onClick={() => setOpen(true)}
                 text={'SIGN'}
                 style={{ width: '100%' }}

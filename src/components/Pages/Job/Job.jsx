@@ -26,7 +26,7 @@ function Job() {
                 'Authorization': `Bearer ${token}`
             },
         }).then(response => {
-            console.log(response.data);
+            console.log('response:', response.data);
             if (response.data) {
                 setContractMerchant(response.data.merchant);
                 if (response.data.totalTasks) setTotalTasks(response.data.totalTasks);

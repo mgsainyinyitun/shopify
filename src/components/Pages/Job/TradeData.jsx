@@ -71,6 +71,7 @@ export default function TradeData({ merchant, totalTasks, currentTask }) {
         // }).then(response => {
         //     console.log(response.data);
         //     setTradeHist(response.data);
+        if (product) {
             navigate("/trade", {
                 replace: false,
                 state: {
@@ -80,6 +81,7 @@ export default function TradeData({ merchant, totalTasks, currentTask }) {
                     totalTasks
                 }
             });
+        }
 
         // })
         // .catch(error => {

@@ -23,10 +23,19 @@ export default function MerchantLog() {
         })
     }, [])
 
+    if (logs.length !== 0) {
+        logs.sort((a, b) => {
+            const dateA = new Date(a.time);
+            const dateB = new Date(b.time);
+
+            return dateB - dateA;
+        });
+    }
+
     return (
         <Box mt={5}>
             <Typography mb={3}>
-                Trader Task Logs (0)
+                Trader Task Logs ({logs.length})
             </Typography>
 
             <TableContainer component={Paper} sx={{ height: '200px' }}>
