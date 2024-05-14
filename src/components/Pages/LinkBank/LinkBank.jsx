@@ -103,7 +103,7 @@ export default function LinkBank() {
                 setBanks(response.data.banks);
             })
             .catch(error => {
-                console.error(error);
+                console.log(error);
                 console.log("there is some error;")
             });
 
@@ -120,7 +120,7 @@ export default function LinkBank() {
                 setaBanks(response.data.banks);
             })
             .catch(error => {
-                console.error(error);
+                console.log(error);
                 console.log("there is some error;")
             });
     }, []);
@@ -228,9 +228,8 @@ export default function LinkBank() {
                             </Box>
                             <Box mt={3}>
                                 <TextField
-                                    label="E-mail"
+                                    label="E-mail (Optional)"
                                     name="email"
-                                    required
                                     onChange={handleChange}
                                     fullWidth
                                     size="small"

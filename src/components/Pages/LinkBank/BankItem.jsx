@@ -6,6 +6,7 @@ export default function BankItem({ userBank }) {
     const [imageData, setImageData] = useState(null);
 
     useEffect(() => {
+        console.log("to get image:", userBank)
         getImageFromDb(userBank.bank.imageId, setImageData);
     }, [userBank])
 
@@ -13,7 +14,9 @@ export default function BankItem({ userBank }) {
         <Box m={1} p={1} sx={{ border: '1px solid teal', borderRadius: '5px' }} justifyContent='space-between' display='flex' alignItems='center'>
             <Box mr={3}>
                 {/* <Avatar src={imageData} /> */}
-                <img src={imageData} width={50} height={50} />
+                {imageData ? 
+                (<img src={imageData} width={50} height={50} />) : <Avatar />}
+
             </Box>
             <Box width='100%'>
                 <Typography>{userBank.name}</Typography>
