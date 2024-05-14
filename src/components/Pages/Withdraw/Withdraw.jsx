@@ -1,25 +1,27 @@
 import { Box, Button, TextField, Typography } from "@mui/material";
 import { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import WithdrawModal from "./WithdrawModal";
 import { ToastContainer } from "react-toastify";
 
 export default function Withdraw() {
-    const { uid } = useParams(); 
-    console.log(uid);
+    const { uid } = useParams();
+    const location = useLocation();
+    const { user } = location.state;
 
     const [amount, setAmount] = useState(0);
-    const [open,setOpen] = useState(false);
-    function submit(e){
+    const [open, setOpen] = useState(false);
+    function submit(e) {
         e.preventDefault();
         console.log(amount);
     }
     return (
         <Box>
-            <ToastContainer/>
+            <ToastContainer />
             <form onSubmit={submit}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography mb={3}>Enter the withdrawal amount</Typography>
+                    <Typography mb={3} variant="subtitle2">User balance : <i className="green"> {user.balance} Rs</i></Typography>
                     <Box display={'flex'} alignItems={'center'}>
                         <Typography mr={1} color={'gray'} variant="h5"><i>Rs</i></Typography>
                         <TextField
@@ -30,15 +32,15 @@ export default function Withdraw() {
                             autoComplete="current-password"
                             size="small"
                             fullWidth
-                            onChange={e=>setAmount(e.target.value)}
+                            onChange={e => setAmount(e.target.value)}
                         /></Box>
                 </Box>
                 <Box mt={3} sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography mb={2}>Payment Channel</Typography>
-                    <Button onClick={()=>setOpen(true)} fullWidth variant="outlined">Go To Links</Button>
+                    <Button onClick={() => setOpen(true)} fullWidth variant="outlined">Go To Links</Button>
                 </Box>
             </form>
-            <WithdrawModal open={open} handleClose={()=>setOpen(false)} amount={amount} uid={uid}/>
+            <WithdrawModal open={open} handleClose={() => setOpen(false)} amount={amount} uid={uid} />
         </Box>
     );
 }

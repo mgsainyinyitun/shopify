@@ -30,13 +30,13 @@ export default function UserInfo(props) {
                 icon={<PersonOutlineOutlinedIcon sx={{ color: 'green' }} />}
                 title={`(${props.user.uid})${props.user.username}`}
                 description={props.user.phone}
-                leftContent={ <Button><Chip label="Invite Friend" size="small" /></Button>}
+                leftContent={<Button><Chip label="Invite Friend" size="small" /></Button>}
             />
             <ProfileItem
                 icon={<AccountBalanceWalletOutlinedIcon />}
                 title={'Balance'}
                 description={`Rs/ ${props.user.balance}`}
-                leftContent={ <IconButton><SyncOutlinedIcon/></IconButton> }
+                leftContent={<IconButton><SyncOutlinedIcon /></IconButton>}
             />
             <ProfileItem
                 icon={<WalletOutlinedIcon />}
@@ -50,7 +50,16 @@ export default function UserInfo(props) {
 
                 <Button variant="outlined" sx={{ marginRight: "5px", color: 'green' }} fullWidth>DEPOSIT</Button>
 
-                <Button onClick={()=>navigate(`/profile/withdraw/${props.user.uid}`)} variant="outlined" fullWidth sx={{ marginRight: "5px" }}>WITHDRWL</Button>
+                <Button onClick={() => 
+                    navigate(`/profile/withdraw/${props.user.uid}`, {
+                        replace: false,
+                        state: {
+                            user:props.user
+                        }
+                    }
+                    // navigate(`/profile/withdraw/${props.user.uid}`
+
+                    )} variant="outlined" fullWidth sx={{ marginRight: "5px" }}>WITHDRWL</Button>
 
                 {/* <Button variant="contained" ml={5} disableElevation sx={{ minWidth:550, background: '#ede7f6', color: 'green' }}>
                     DEPOSIT
