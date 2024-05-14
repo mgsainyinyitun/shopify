@@ -36,6 +36,7 @@ export default function TradingPage() {
         const url = `${API_HOST}/trade/start-trade`
         const token = localStorage.getItem('accessToken');
         const data = {
+            tradeId: product.tradeId,
             productId: product.id,
             taskNumber: currentTask
         }

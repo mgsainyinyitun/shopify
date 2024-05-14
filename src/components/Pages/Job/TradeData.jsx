@@ -26,7 +26,7 @@ export default function TradeData({ merchant, totalTasks, currentTask }) {
                     'Authorization': `Bearer ${token}`
                 },
             }).then(response => {
-                console.log(response.data);
+                console.log("to trade product" , response.data);
                 setProduct(response.data);
                 getImageFromDb(response.data.uid, setImage);
             }).catch(error => {
