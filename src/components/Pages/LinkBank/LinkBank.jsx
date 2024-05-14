@@ -1,4 +1,4 @@
-import { Alert, Avatar, Box, Button, IconButton, InputLabel, MenuItem, Modal, OutlinedInput, Select, Snackbar, TextField, Typography } from "@mui/material";
+import { Alert, Avatar, Box, Button, IconButton, InputLabel, ListItemIcon, MenuItem, Modal, OutlinedInput, Select, Snackbar, TextField, Typography } from "@mui/material";
 import LinkedBankList from "./LinkedBankList";
 import { useEffect, useState } from "react";
 import AccountBalanceOutlinedIcon from '@mui/icons-material/AccountBalanceOutlined';
@@ -8,6 +8,9 @@ import CloseIcon from '@mui/icons-material/Close';
 import { API_HOST } from "../../../constant";
 import axios from "axios";
 import NotificationAlert from "../../common/NotificationAlert";
+import { getImageFromDb } from "../../../utils/ImageUtils";
+import BankItem from "./BankItem";
+import BankMenuItem from "./BankMenuItem";
 
 const style = {
     position: 'absolute',
@@ -33,7 +36,6 @@ export default function LinkBank() {
 
     const [formData, setFormData] = useState({
         name: "",
-        account: "",
         identification: "",
         userId: localStorage.getItem('user_id'),
         bankId: null,
@@ -145,15 +147,10 @@ export default function LinkBank() {
             {
                 banks.map(b => {
                     return (
-                        <Box m={1} p={1} sx={{ border: '1px solid teal', borderRadius: '5px' }}>
-                            <a>
-                                <Typography>{b.bank.name}</Typography>
-                                <Box>
-                                    <Typography>Account: {b.account}</Typography>
-                                    <Typography>Phone : {b.phone} </Typography>
-                                </Box>
-                            </a>
-                        </Box>)
+                        <BankItem
+                            userBank={b}
+                        />
+                    )
                 })
             }
 
@@ -201,21 +198,13 @@ export default function LinkBank() {
                                 >
                                     {
                                         abanks.map(bank => {
-                                            return <MenuItem
-                                                value={bank.id}> {bank.name}</MenuItem>
+                                            return (
+                                                <MenuItem value={bank.id}>
+                                                    {bank.name}
+                                                </MenuItem>);
                                         })
                                     }
                                 </Select>
-                            </Box>
-                            <Box mt={3}>
-                                <TextField
-                                    label="Bank Account"
-                                    name="account"
-                                    required
-                                    fullWidth
-                                    onChange={handleChange}
-                                    size="small"
-                                />
                             </Box>
                             <Box mt={3}>
                                 <TextField
@@ -249,7 +238,7 @@ export default function LinkBank() {
                             </Box>
                             <Box mt={3}>
                                 <TextField
-                                    label="Identification"
+                                    label="CPF Number (Optional)"
                                     name="identification"
                                     fullWidth
                                     onChange={handleChange}

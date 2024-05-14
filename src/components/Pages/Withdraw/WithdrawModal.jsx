@@ -66,6 +66,7 @@ export default function WithdrawModal({ open, handleClose, amount, uid }) {
         ).then(response => {
             console.log("success:", response.data);
             showToast("Successfully request to withdraw.", "success");
+            handleClose();
         }).catch(err => {
             console.log(err);
             showToast(`Error request to withdraw. ${err.data}`, "error");
