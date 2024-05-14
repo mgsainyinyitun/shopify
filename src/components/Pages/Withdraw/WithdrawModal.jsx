@@ -1,15 +1,16 @@
-import { Box, Button, Modal, Typography } from "@mui/material";
+import { Avatar, Box, Button, Modal, Typography } from "@mui/material";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { API_HOST } from "../../../constant";
 import { grey } from "@mui/material/colors";
 import { showToast } from "../../common/Notification";
+import WithdrawBankItem from "./WithdrawBankItem";
 const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: "90%",
+    width: "40%",
     minHeight: "40%",
     bgcolor: 'background.paper',
     borderRadius: 2,
@@ -32,7 +33,6 @@ export default function WithdrawModal({ open, handleClose, amount, uid }) {
             },
         })
             .then(response => {
-                console.log(response.data.banks);
                 setBanks(response.data.banks);
             })
             .catch(error => {
@@ -43,8 +43,10 @@ export default function WithdrawModal({ open, handleClose, amount, uid }) {
 
 
     function submitWithdraw(bank) {
-        console.log(bank);
-        console.log(amount);
+        if (amount <= 0) {
+            showToast("Amount must be greater than 0", "error");
+            return;
+        }
 
         const data = {
             uid,
@@ -89,16 +91,11 @@ export default function WithdrawModal({ open, handleClose, amount, uid }) {
                 {
                     banks.map(b => {
                         return (
-                            <Box display='flex' justifyContent='space-between' m={1} p={1} sx={{ borderRadius: '5px', background: 'rgba(0,255,0,0.1)' }}>
-                                <Box>
-                                    <Typography color='primary'>{b.bank.name}</Typography>
-                                    <Box>
-                                        <Typography variant="subtitle2" fontSize={10} color={grey}>Account: {b.account}</Typography>
-                                        <Typography variant="subtitle2" fontSize={10} color={grey} >Phone : {b.phone} </Typography>
-                                    </Box>
-                                </Box>
-                                <Button onClick={() => submitWithdraw(b)} variant="outlined" sx={{ height: 30 }}>CHOOSE</Button>
-                            </Box>)
+                            <WithdrawBankItem
+                                b={b}
+                                submitWithdraw={submitWithdraw}
+                            />
+                        );
                     })
                 }
             </Box>

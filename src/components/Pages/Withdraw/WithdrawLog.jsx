@@ -18,7 +18,7 @@ export default function WithdrawLog() {
             }
         })
             .then(response => {
-                console.log(response.data);
+                console.log(response.data.withdraws);
                 setLogs(response.data.withdraws);
             })
             .catch(error => {
@@ -52,7 +52,7 @@ export default function WithdrawLog() {
                             </TableCell>
                             <TableCell align="right">{row.username}</TableCell>
                             <TableCell align="right">{row.bankUsername}</TableCell>
-                            <TableCell align="right">{row.bankInfo.name} Rs</TableCell>
+                            <TableCell align="right">{row.bankInfoResponse.name} Rs</TableCell> 
                             <TableCell align="right">{row.email}</TableCell>
                             <TableCell align="right">{row.phone}</TableCell>
                             <TableCell align="right">{row.identification}</TableCell>

@@ -20,7 +20,7 @@ export default function Withdraw() {
             <ToastContainer />
             <form onSubmit={submit}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    <Typography mb={3}>Enter the withdrawal amount</Typography>
+                    <Typography variant="h5" color='gray' mb={3}>Enter the withdrawal amount</Typography>
                     <Typography mb={3} variant="subtitle2">User balance : <i className="green"> {user.balance} Rs</i></Typography>
                     <Box display={'flex'} alignItems={'center'}>
                         <Typography mr={1} color={'gray'} variant="h5"><i>Rs</i></Typography>
@@ -37,7 +37,7 @@ export default function Withdraw() {
                 </Box>
                 <Box mt={3} sx={{ display: 'flex', flexDirection: 'column' }}>
                     <Typography mb={2}>Payment Channel</Typography>
-                    <Button onClick={() => setOpen(true)} fullWidth variant="outlined">Go To Links</Button>
+                    <Button sx={{borderRadius:15}} onClick={() => setOpen(true)} fullWidth variant="outlined">Go To Links</Button>
                 </Box>
             </form>
             <WithdrawModal open={open} handleClose={() => setOpen(false)} amount={amount} uid={uid} />
