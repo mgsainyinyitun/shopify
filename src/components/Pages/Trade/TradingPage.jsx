@@ -2,6 +2,7 @@ import { Box, Button, LinearProgress, Paper, Step, StepContent, StepLabel, Stepp
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import { API_HOST } from "../../../constant"
 
 export default function TradingPage() {
@@ -108,11 +109,11 @@ export default function TradingPage() {
                                 {step.label}
                             </StepLabel>
                             <StepContent>
-                                <Typography>{step.description}</Typography>
+                                {!step1Error ? (<Typography>{step.description}</Typography>) : null}
                                 {
                                     step1Error && (
-                                        <Box>
-                                            <Typography color="error">{step1ErrorMsg}</Typography>
+                                        <Box display='flex' alignItems='center'>
+                                            <ErrorOutlineIcon sx={{ color: 'red', marginRight: 1 }} /><Typography color="error"> {step1ErrorMsg}</Typography>
                                         </Box>
                                     )
                                 }
@@ -121,7 +122,7 @@ export default function TradingPage() {
                                         <LinearProgress color="success" />
                                     </Box> : null
                                 }
-                                {activeStep === 3 ?
+                                {!step1Error && activeStep === 3 ?
                                     <Button fullWidth variant="outlined" onClick={() => navigate("/job")} sx={{ mt: 1, mr: 1 }}>
                                         CONFIRM
                                     </Button> : null

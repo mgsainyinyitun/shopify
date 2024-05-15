@@ -11,6 +11,8 @@ import NotificationAlert from "../../common/NotificationAlert";
 import { getImageFromDb } from "../../../utils/ImageUtils";
 import BankItem from "./BankItem";
 import BankMenuItem from "./BankMenuItem";
+import { ToastContainer } from "react-toastify";
+import { showToast } from "../../common/Notification";
 
 const style = {
     position: 'absolute',
@@ -83,6 +85,7 @@ export default function LinkBank() {
             setShowSuccessMsg(true);
         }).catch(err => {
             console.log(err);
+            showToast(err.response.data.message, "error");
             console.log("some error in linking bank");
         })
     }
@@ -127,7 +130,7 @@ export default function LinkBank() {
 
     return (
         <Box sx={{}}>
-
+            <ToastContainer/>
             <NotificationAlert
                 type={"success"}
                 show={showSuccessMsg}
