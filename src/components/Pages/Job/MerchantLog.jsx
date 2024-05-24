@@ -33,50 +33,51 @@ export default function MerchantLog() {
     }
 
     return (
-        <Box mt={5}>
+        <Box mt={5} display='flex' flexDirection='column' alignItems='center'>
             <Typography mb={3}>
                 Trader Task Logs ({logs.length})
             </Typography>
-
-            <TableContainer component={Paper} sx={{ height: '200px' }}>
-                <Table sx={{ minWidth: 650 }} size="small" aria-label="a dense table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Order ID</TableCell>
-                            <TableCell align="right">Merchant</TableCell>
-                            <TableCell align="right">Task number</TableCell>
-                            <TableCell align="right">Order price</TableCell>
-                            <TableCell align="right">Commission</TableCell>
-                            <TableCell align="right">Working time</TableCell>
-                            <TableCell align="right">State</TableCell>
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {logs.map((row) => (
-                            <TableRow
-                                key={row.No}
-                                sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
-                            >
-                                <TableCell component="th" scope="row">
-                                    {row.orderId}
-                                </TableCell>
-                                <TableCell align="right">{row.merchant}</TableCell>
-                                <TableCell align="right">{row.taskNumber}</TableCell>
-                                <TableCell align="right">{row.orderPrice} Rs</TableCell>
-                                <TableCell align="right">{row.commission} %</TableCell>
-                                <TableCell align="right">{row.time}</TableCell>
-                                <TableCell align="right">{
-                                    row.state === 'PENDING' ?
-                                        <Chip label='PENDING' size="small" /> :
-                                        row.state === 'FINISHED' ?
-                                            <Chip color="success" label='FINISHED' size="small" /> :
-                                            <Chip label='NOT START' size='small' />
-                                }</TableCell>
+            <Box sx={{ width: '100%', overflow: 'auto' }}>
+                <TableContainer component={Paper} sx={{ width: '100%', display: 'table', tableLayout: 'fixed' }}>
+                    <Table size="small" aria-label="a dense table">
+                        <TableHead>
+                            <TableRow>
+                                <TableCell>Order ID</TableCell>
+                                <TableCell align="right">Merchant</TableCell>
+                                <TableCell align="right">Task number</TableCell>
+                                <TableCell align="right">Order price</TableCell>
+                                <TableCell align="right">Commission</TableCell>
+                                <TableCell align="right">Working time</TableCell>
+                                <TableCell align="right">State</TableCell>
                             </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                        </TableHead>
+                        <TableBody>
+                            {logs.map((row) => (
+                                <TableRow
+                                    key={row.No}
+                                    sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+                                >
+                                    <TableCell component="th" scope="row">
+                                        {row.orderId}
+                                    </TableCell>
+                                    <TableCell align="right">{row.merchant}</TableCell>
+                                    <TableCell align="right">{row.taskNumber}</TableCell>
+                                    <TableCell align="right">{row.orderPrice} Rs</TableCell>
+                                    <TableCell align="right">{row.commission} %</TableCell>
+                                    <TableCell align="right">{row.time}</TableCell>
+                                    <TableCell align="right">{
+                                        row.state === 'PENDING' ?
+                                            <Chip label='PENDING' size="small" /> :
+                                            row.state === 'FINISHED' ?
+                                                <Chip color="success" label='FINISHED' size="small" /> :
+                                                <Chip label='NOT START' size='small' />
+                                    }</TableCell>
+                                </TableRow>
+                            ))}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+            </Box>
         </Box>
     );
 }

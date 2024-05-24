@@ -15,9 +15,9 @@ export default function ImageCarousel() {
         <Carousel useKeyboardArrows={true} autoPlay={true}>
             {images.map((URL, index) => (
                 <Box sx={{ width: '100%',display:'flex',justifyContent:'center' }}>
-                    <Box sx={{ width: '30%' }}>
+                    <div className="side-image-wraper">
                         <img alt="sample_file" src={URL} key={index} />
-                    </Box>
+                    </div>
                 </Box>
             ))}
         </Carousel>

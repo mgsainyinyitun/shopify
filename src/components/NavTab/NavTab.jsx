@@ -5,7 +5,7 @@ import HomeOutlinedIcon from '@mui/icons-material/HomeOutlined';
 import FormatListBulletedOutlinedIcon from '@mui/icons-material/FormatListBulletedOutlined';
 import EngineeringOutlinedIcon from '@mui/icons-material/EngineeringOutlined';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 export default function NavTab() {
 
     const [value, setValue] = useState(0);
@@ -24,7 +24,7 @@ export default function NavTab() {
     };
 
     return (
-        <Box sx={{ background: 'white', display: 'flex', justifyContent: 'center', bottom: 0, position: 'fixed', width: '100%', borderTop: '1px solid gray' }} >
+        <Box sx={{ border:'1px solid red', background: 'white', display: 'flex', justifyContent: 'center', bottom: 0, position: 'fixed', width: '100%', borderTop: '1px solid gray' }} >
             <Tabs value={value} onChange={handleChange} aria-label="icon tabs example">
                 <Tab icon={< HomeOutlinedIcon />} aria-label="Home" />
                 <Tab icon={<FormatListBulletedOutlinedIcon />} aria-label="Contacts" />

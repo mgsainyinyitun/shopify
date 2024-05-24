@@ -18,7 +18,7 @@ export default function MerchantData({ merchant,totalTasks,currentTask,finishedT
         }
     })
     return (
-        <>
+        <Box>
             <Typography variant='h6' color={'gray'} mb={3}>
                 Contracted Merchant Data
             </Typography>
@@ -46,6 +46,6 @@ export default function MerchantData({ merchant,totalTasks,currentTask,finishedT
              totalTasks = {totalTasks}
              currentTask = {currentTask}
             />
-        </>
+        </Box>
     );
 }

@@ -44,7 +44,8 @@ function Job() {
     return (
         <>
             {
-                loading ? <Loading /> : <Box mt={10}>
+                loading ? <Loading /> : 
+                <Box mt={10} sx={{width:'100%'}}>
                     <MerchantData
                         merchant={contractMerchant}
                         totalTasks={totalTasks}

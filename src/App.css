@@ -23,3 +23,16 @@ body {
 .green{
     color: green;
 }
+
+
+.side-image-wraper{
+    width: 30%;
+}
+
+
+
+@media screen and (max-width: 768px) {  /* This is for Android phone size */
+    .side-image-wraper {
+      width: 70%;
+    }
+  }
